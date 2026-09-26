@@ -1,8 +1,16 @@
 <!doctype html>
 <html lang="en">
 <head>
-   <base href="/Divyaansh/Teardown/">
 <meta charset="utf-8">
+<script>
+/* Hosted without a trailing slash (/Divyaansh/Teardown), relative paths
+   resolve one folder too high and the page loads unstyled. Add the slash
+   once, before anything else loads. Skipped for file:// so opening
+   index.html locally, and the tools/ checks, still work. */
+if (location.protocol !== 'file:' && !/(\/|\.html)$/.test(location.pathname)) {
+  location.replace(location.pathname + '/' + location.search + location.hash);
+}
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Teardown :: who owns the inside of everything</title>
 <meta name="description" content="Take technology apart and see who supplies each piece, what share they hold, and how concentrated that layer really is.">
