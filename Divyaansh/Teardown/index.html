@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teardown :: who owns the inside of everything</title>
+<meta name="description" content="Take technology apart and see who supplies each piece, what share they hold, and how concentrated that layer really is.">
+<link rel="stylesheet" href="assets/app.css">
+<script>
+/* Theme bootstrap. Runs before first paint so the page never flashes the
+   wrong ground. Deliberately inline and dependency-free: it has to work
+   before core.js exists, and build.py only rewrites <script src> tags, so
+   this survives into the single-file build unchanged. */
+(function () {
+  var t;
+  try { t = localStorage.getItem('td-theme'); } catch (e) { /* file:// may refuse */ }
+  if (t !== 'light' && t !== 'dark') {
+    t = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches)
+      ? 'dark' : 'light';
+  }
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%230d1b2a'/><rect x='22' y='30' width='56' height='34' rx='3' fill='none' stroke='white' stroke-width='6'/><rect x='14' y='68' width='72' height='7' rx='3' fill='%23b5822a'/></svg>">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand" title="Home" role="button" tabindex="0" aria-label="Teardown home">
+    <b>TEARDOWN</b><span>who owns the inside of everything</span>
+  </div>
+  <nav class="navtabs" id="tabs" aria-label="Primary">
+    <button class="navtab" id="browse-btn" aria-expanded="false" aria-controls="browse">Browse <span class="caret">&#9662;</span></button>
+    <button class="navtab" data-go="findings">Findings</button>
+    <button class="navtab" data-go="about">Method</button>
+  </nav>
+  <div class="searchwrap">
+    <input id="q" type="text" placeholder="Search a part or a company" autocomplete="off" spellcheck="false" aria-label="Search a part or a company" role="combobox" aria-expanded="false" aria-controls="results" aria-autocomplete="list">
+    <div class="results" id="results" role="listbox"></div>
+  </div>
+  <!-- Opt-in only. It must never auto-run: tools/interact.py drives this page
+       with 221 assertions and an uninvited overlay would break every one. -->
+  <button class="tourtrigger" id="tour-btn" type="button" title="Take a guided tour of the laptop teardown">
+    <span class="tourtriggerlabel">Run tour</span>
+  </button>
+  <button class="themetoggle" id="theme-toggle" type="button" aria-pressed="false" title="Switch theme">
+    <span class="themeicon" aria-hidden="true"></span><span class="themelabel"></span>
+  </button>
+</header>
+
+<div class="browse" id="browse" role="region" aria-label="Browse catalogue"></div>
+
+<main id="app"></main>
+
+<noscript>
+  <div style="max-width:640px;margin:80px auto;padding:0 20px;font-family:Calibri,'Segoe UI',system-ui,sans-serif;color:#0d1b2a">
+    <h1 style="font-size:22px">Teardown needs JavaScript</h1>
+    <p>Every teardown, share table and concentration figure on this site is built in the browser from plain
+    data files: there is no server rendering a fallback page. Enable JavaScript to use it.</p>
+  </div>
+</noscript>
+
+<!-- engine -->
+<script src="js/core.js"></script>
+<script src="js/schematic.js"></script>
+<script src="js/iso.js"></script>
+<script src="js/panel.js"></script>
+<script src="js/overview.js"></script>
+<script src="js/story.js"></script>
+
+<!-- vendored, non-module builds so file:// keeps working; see js/vendor/NOTICE.md -->
+<script src="js/vendor/three.min.js"></script>
+<script src="js/vendor/OrbitControls.js"></script>
+<script src="js/three-view.js"></script>
+
+<!-- data -->
+<script src="data/sections.js"></script>
+<script src="data/companies.js"></script>
+<script src="data/sources.js"></script>
+<script src="data/devices/laptop.js"></script>
+<script src="data/devices/smartphone.js"></script>
+<script src="data/devices/ai-server.js"></script>
+<script src="data/devices/ev.js"></script>
+<script src="data/devices/tractor.js"></script>
+<script src="data/devices/martech.js"></script>
+<script src="data/devices/console.js"></script>
+<script src="data/devices/smart-tv.js"></script>
+<script src="data/devices/washing-machine.js"></script>
+<script src="data/devices/tablet.js"></script>
+<script src="data/devices/aircraft.js"></script>
+<script src="data/devices/wind-turbine.js"></script>
+<script src="data/devices/subsea-cable.js"></script>
+<script src="data/devices/car.js"></script>
+<script src="data/devices/microwave.js"></script>
+
+<!-- 3D models, loaded after the devices they belong to -->
+<script src="data/models/laptop3d.js"></script>
+<script src="data/models/smartphone3d.js"></script>
+<script src="data/models/aiserver3d.js"></script>
+<script src="data/models/console3d.js"></script>
+<script src="data/models/smarttv3d.js"></script>
+<script src="data/models/washer3d.js"></script>
+<script src="data/models/tablet3d.js"></script>
+<script src="data/models/aircraft3d.js"></script>
+<script src="data/models/turbine3d.js"></script>
+<script src="data/models/tractor3d.js"></script>
+<script src="data/models/subseacable3d.js"></script>
+<script src="data/models/car3d.js"></script>
+<script src="data/models/microwave3d.js"></script>
+<script src="data/models/ev3d.js"></script>
+
+<!-- app last -->
+<script src="js/app.js"></script>
+
+<!-- the guided tour drives the real UI, so it loads after the app that owns it -->
+<script src="js/tour.js"></script>
+</body>
+</html>

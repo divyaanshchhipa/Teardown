@@ -1,0 +1,1734 @@
+/* Teardown :: styles */
+
+@font-face {
+  font-family: 'Inter Var';
+  src: url('fonts/inter-var.woff2') format('woff2-variations'), url('fonts/inter-var.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter Var';
+  src: url('fonts/inter-var-italic.woff2') format('woff2-variations'), url('fonts/inter-var-italic.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  /* brand anchor: used deliberately, not on every surface: primary actions,
+     the topbar, and a handful of section/selection accents */
+  --brand:    #002060;
+  --brand-2:  #0a2f7a;   /* hover/active state of the anchor */
+  --brand-tint: #e8ecf5; /* pale wash for selected rows/backgrounds */
+  /* signal: the one bright, non-navy accent, reserved for "this is live/
+     on/interactive right now": toggle-on states, the chokepoint pulse, the
+     3D canvas focus ring. Navy stays the calm, structural colour; signal
+     is the one that's allowed to feel electric */
+  --signal:   #00b6c4;
+  --signal-2: #e0fbfd;
+  /* the chokepoint pulse expands this ring; kept as its own token because a
+     keyframe cannot apply alpha to a plain hex */
+  --signal-glow:   rgba(0,182,196,.55);
+  --signal-glow-0: rgba(0,182,196,0);
+
+  --ink:      #0d1b2a;
+  --ink-2:    #16293e;
+  --ink-3:    #24405c;
+  --paper:    #ffffff;
+  --paper-2:  #f5f7fa;
+  --paper-3:  #eaeef3;
+  --line:     #dce2ea;
+  --line-2:   #c3ccd8;
+  --muted:    #5d6c7e;
+  /* every uppercase micro-label on the site sets in this. It used to be
+     #8593a4, which measured 3.13:1 on white, below AA for body text, and
+     it is body-sized text. Darkened until it clears 4.5:1 on both the card
+     and the page ground. */
+  --muted-2:  #647385;
+  --accent:   #b5822a;
+  /* --accent is a fine border and background, but as text it only reaches
+     3.16:1, so type that wants the gold uses this instead */
+  --accent-ink: #926922;
+  --accent-2: #f0e2c6;
+  --good:     #1f7a5c;
+  --warn:     #b5822a;
+  --hot:      #a63c35;
+
+  /* ---- chrome ----
+     The topbar, browse drawer and search field are a dark island that sits
+     on the page in both themes. They used to borrow --brand, but in dark
+     mode a navy bar on a near-black page has nothing to separate it, so the
+     chrome owns its own tokens. Light values are exactly what they were. */
+  --bar:        #002060;
+  --bar-ink:    #ffffff;
+  --bar-muted:  #b9c7d6;
+  --bar-muted-2:#9fb0c4;
+  --bar-dim:    #7f92a8;
+  --bar-hover:  rgba(255,255,255,.09);
+  --bar-line:   rgba(255,255,255,.18);
+  --bar-edge:   transparent;   /* separates the bar from the page ground */
+  --drawer:     #16293e;
+  --drawer-ink: #cdd8e4;
+  --drawer-soon:#6d7f93;
+
+  /* text sitting on a filled brand / band / accent ground */
+  --on-brand:   #ffffff;
+
+  /* translucent ground for things that float over content */
+  --scrim:      rgba(255,255,255,.94);
+  --scrim-2:    rgba(255,255,255,.92);
+
+  /* hairline ring drawn *inside* a colour swatch so a pale part colour
+     still has an edge against a pale card */
+  --ring:       rgba(13,27,42,.22);
+  --ring-on:    rgba(255,255,255,.5);
+
+  /* ---- analytical ramp 1: concentration bands ----
+     These carry meaning. Hue is fixed: a monopoly band is red in both
+     themes, only lightness and saturation move. */
+  /* lifted a hair from #2e9147: at the old value neither white (3.99:1) nor
+     the dark ink (4.35:1) cleared AA on the pill, so the band itself moved */
+  --conc-fragmented:  #2f9649;
+  --conc-competitive: #6fa03a;
+  --conc-moderate:    #c9a227;
+  --conc-high:        #cf7c2a;
+  --conc-monopoly:    #a63c35;
+  --conc-fg-fragmented:  #24702f;
+  --conc-fg-competitive: #4d7526;
+  --conc-fg-moderate:    #886d10;  /* 4.49:1 on the page ground at #8a6f10, just under AA */
+  --conc-fg-high:        #a85c12;
+  --conc-fg-monopoly:    #93302a;
+
+  /* confidence grades */
+  /* text drawn on a filled concentration band. Measured per band: a dark ink
+     wins on four of the five, white only on the darkest (monopoly). */
+  --on-band:     #0d1b2a;
+  --on-band-inv: #ffffff;
+
+  --conf-high-bg:   #e0f0e8;  --conf-high-fg:   #1e785a;
+  --conf-medium-bg: #fbf0d8;  --conf-medium-fg: #8a6416;
+  --conf-low-bg:    #f7e4e2;  --conf-low-fg:    #a63c35;
+
+  /* misc tinted pills */
+  --tint-blue-bg: #e6eefa;  --tint-blue-fg: #2f6fd0;
+  --tint-meta-bg: #e3ebf5;
+  --choke-fg:     #7c5715;
+
+  /* the ground the 3D model is perceived against: the canvas itself is
+     alpha-transparent, so these gradients *are* the scene background */
+  --board-glow:  #eef1f5;
+  --board-glow-0:rgba(238,241,245,0);
+  --sky-glow:    #eaf0f7;
+  --sky-glow-0:  rgba(234,240,247,0);
+  --sky-top:     #f2f6fb;
+  --sky-bottom:  #e6ecf4;
+  --tile:        #ffffff;
+  --tile-sel:    #fbfcfe;
+
+  /* type scale: six steps covers everything from the home display
+     heading down to table meta labels */
+  --fs-display: 34px;
+  --fs-title:   26px;
+  --fs-h2:      20px;
+  --fs-h3:      15px;
+  --fs-body:    14.5px;
+  --fs-small:   13px;
+  --fs-caption: 11.5px;
+
+  /* radius / elevation / motion scales */
+  --radius-sm: 4px;
+  --radius:    6px;
+  --radius-lg: 10px;
+  --shadow-1: 0 1px 2px rgba(13,27,42,.06);
+  --shadow-2: 0 1px 2px rgba(13,27,42,.06), 0 6px 20px rgba(13,27,42,.06);
+  --shadow-3: 0 4px 10px rgba(13,27,42,.10), 0 16px 40px rgba(13,27,42,.14);
+  --shadow:   var(--shadow-2);
+  --ease: cubic-bezier(.22,.9,.3,1);
+  --dur-fast: .12s;
+  --dur: .18s;
+
+  --focus-ring: 0 0 0 2px var(--paper), 0 0 0 4px var(--brand);
+
+  --font: 'Inter Var', "Segoe UI", Calibri, system-ui, sans-serif;
+  /* every measured figure on the site: a share, an HHI, a market size,
+     a year, sets in this face with tabular-nums. The distinction between
+     "this is prose" and "this is a recorded figure" is the one piece of
+     typographic signature the whole redesign leans on. */
+  --font-mono: ui-monospace, "Cascadia Mono", "SF Mono", "JetBrains Mono", Consolas, monospace;
+}
+
+/* ---------- dark theme ----------
+   Structure: the light values above are the defaults. A `data-theme`
+   attribute on the root element is authoritative, and is set before first
+   paint by the bootstrap in index.html.
+
+   Two rules governed the dark values: hue is preserved wherever a colour
+   means something (concentration bands, geography, confidence), and every
+   ground/text pair was checked against WCAG rather than picked by eye. */
+
+:root[data-theme="dark"] {
+  --brand:    #5a94f0;   /* navy is unreadable on a dark ground; the anchor
+                            lifts to the same hue at a legible lightness */
+  --brand-2:  #7dabf7;
+  --brand-tint: #17253c;
+  --signal:   #22d3e0;
+  --signal-2: #08323a;
+  --signal-glow:   rgba(34,211,224,.55);
+  --signal-glow-0: rgba(34,211,224,0);
+
+  --ink:      #e9eef4;
+  --ink-2:    #ccd7e3;
+  --ink-3:    #a6b8cc;
+  --paper:    #151b23;   /* card ground */
+  --paper-2:  #0c1116;   /* page ground */
+  --paper-3:  #1f2833;   /* track / chip ground */
+  --line:     #27313d;
+  --line-2:   #3c4a5a;
+  --muted:    #97a7b9;
+  --muted-2:  #7a8b9f;
+  --accent:   #d9a441;
+  --accent-ink: #d9a441;
+  --accent-2: #352914;
+  /* on dark every band is light enough that the dark ink wins outright */
+  --on-band:     #0c1116;
+  --on-band-inv: #0c1116;
+  --good:     #45b489;
+  --warn:     #d9a441;
+  --hot:      #e46b62;
+
+  --bar:        #08183a;
+  --bar-ink:    #f2f6fb;
+  --bar-muted:  #a8bad0;
+  --bar-muted-2:#8fa4bd;
+  --bar-dim:    #7387a0;
+  --bar-hover:  rgba(255,255,255,.10);
+  --bar-line:   rgba(255,255,255,.16);
+  --bar-edge:   #1d2b45;
+  --drawer:     #101c2e;
+  --drawer-ink: #c3d1e0;
+  --drawer-soon:#6b7d92;
+
+  --on-brand:   #071120;
+
+  --scrim:      rgba(21,27,35,.94);
+  --scrim-2:    rgba(21,27,35,.92);
+
+  --ring:       rgba(255,255,255,.28);
+  --ring-on:    rgba(0,0,0,.45);
+
+  /* bands: same hues, lifted for a dark ground */
+  --conc-fragmented:  #3fae5c;
+  --conc-competitive: #86bd4d;
+  --conc-moderate:    #e0b83a;
+  --conc-high:        #e8913c;
+  --conc-monopoly:    #d8564c;
+  --conc-fg-fragmented:  #6ccb85;
+  --conc-fg-competitive: #a8d873;
+  --conc-fg-moderate:    #f0cc62;
+  --conc-fg-high:        #f5ab63;
+  --conc-fg-monopoly:    #f2837a;
+
+  --conf-high-bg:   #12352a;  --conf-high-fg:   #56c69b;
+  --conf-medium-bg: #3a2e14;  --conf-medium-fg: #e5bb50;
+  --conf-low-bg:    #3b1e1c;  --conf-low-fg:    #f18c83;
+
+  --tint-blue-bg: #16263f;  --tint-blue-fg: #79aaf5;
+  --tint-meta-bg: #1d2938;
+  --choke-fg:     #e0b153;
+
+  /* the model's ground: dark enough for a pale airframe to read against,
+     light enough that a near-black console still separates from it */
+  --board-glow:  #212c39;
+  --board-glow-0:rgba(33,44,57,0);
+  --sky-glow:    #1c2836;
+  --sky-glow-0:  rgba(28,40,54,0);
+  --sky-top:     #18222f;
+  --sky-bottom:  #0f151d;
+  --tile:        #1a212a;
+  --tile-sel:    #1f2833;
+
+  /* a light ground casts a soft dark shadow; a dark ground cannot, so
+     elevation is carried by a deeper black plus a hairline top edge */
+  --shadow-1: 0 1px 2px rgba(0,0,0,.40);
+  --shadow-2: 0 1px 2px rgba(0,0,0,.40), 0 6px 20px rgba(0,0,0,.32);
+  --shadow-3: 0 4px 10px rgba(0,0,0,.44), 0 16px 40px rgba(0,0,0,.50);
+  --shadow:   var(--shadow-2);
+}
+
+/* No `prefers-color-scheme` block here on purpose. The bootstrap in
+   index.html resolves the system preference and writes an explicit
+   `data-theme` before first paint, so a media query would only duplicate
+   sixty token declarations to cover a no-JavaScript case this site already
+   cannot serve; see the <noscript> notice. One source of truth. */
+
+* { box-sizing: border-box; }
+/* Both grounds are set explicitly so a host page cannot leave a stray
+   gutter around the content in either theme. */
+/* min-height, not height. `height: 100%` pinned the body box to exactly one
+   viewport, which silently killed every sticky element on the site: a sticky
+   child can only stay stuck while its containing block is still on screen, so
+   the topbar detached and scrolled away the moment you passed 950px. The
+   story nav, pinned at top:58px to sit under that bar, was then left floating
+   against nothing with a 58px hole above it. One property, two symptoms. */
+html, body { min-height: 100%; }
+html { background: var(--paper-2); color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--ink);
+  background: var(--paper-2);
+  -webkit-font-smoothing: antialiased;
+}
+button { font-family: inherit; font-size: inherit; cursor: pointer; }
+a { color: inherit; }
+
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: var(--radius-sm); }
+.topbar :focus-visible { outline-color: var(--bar-ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: .001ms !important; animation-iteration-count: 1 !important;
+      transition-duration: .001ms !important; scroll-behavior: auto !important; }
+}
+
+/* ---------- top bar ---------- */
+
+.topbar {
+  height: 58px;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cg fill='none' stroke='white' stroke-opacity='0.07'%3E%3Cpath d='M0 24h16M32 24h16M24 0v16M24 32v16'/%3E%3Ccircle cx='24' cy='24' r='1.6' fill='white' fill-opacity='0.14' stroke='none'/%3E%3C/g%3E%3C/svg%3E")
+    var(--bar);
+  color: var(--bar-ink);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 18px;
+  position: sticky; top: 0; z-index: 50;
+  /* transparent in light, a hairline in dark: a navy bar on a near-black
+     page has nothing else to separate it from the ground */
+  border-bottom: 1px solid var(--bar-edge);
+}
+.brand {
+  display: flex; align-items: baseline; gap: 9px;
+  cursor: pointer; user-select: none;
+  flex: 0 0 auto;
+}
+.brand b { font-size: 21px; letter-spacing: .5px; font-weight: 700; }
+.brand span { font-size: 12.5px; color: var(--bar-muted-2); letter-spacing: .3px; }
+
+/* min-width:0 lets the tab strip shrink below its content width instead of
+   forcing the whole bar wider than the viewport */
+.navtabs { display: flex; gap: 2px; flex: 1 1 auto; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.navtabs::-webkit-scrollbar { display: none; }
+.navtab {
+  background: transparent; border: 0; color: var(--bar-muted);
+  padding: 7px 13px; border-radius: var(--radius);
+  white-space: nowrap; font-size: 15px; transition: .12s;
+}
+.navtab:hover { background: var(--bar-hover); color: var(--bar-ink); }
+.navtab.on { background: var(--paper); color: var(--brand); font-weight: 600; }
+.navtab .caret { font-size: 11px; opacity: .7; }
+
+/* ---------- browse drawer ---------- */
+
+.browse {
+  display: none; position: sticky; top: 58px; z-index: 49;
+  background: var(--drawer); border-bottom: 3px solid var(--accent);
+  box-shadow: var(--shadow-3);
+}
+.browse.on { display: block; }
+.browse-inner {
+  max-width: 1720px; margin: 0 auto; padding: 20px 18px 24px;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 8px 24px;
+}
+.bcol { min-width: 0; }
+.bhead {
+  color: var(--bar-ink); font-size: 14px; font-weight: 700; letter-spacing: .3px;
+  padding: 4px 6px 6px; border-bottom: 1px solid var(--bar-line);
+  margin-bottom: 5px; cursor: pointer; display: flex; align-items: baseline; gap: 7px;
+}
+.bhead:hover { color: var(--accent); }
+.bcount {
+  margin-left: auto; font-size: 10.5px; font-weight: 600; letter-spacing: .6px;
+  text-transform: uppercase; color: var(--bar-dim);
+}
+.blink {
+  display: block; width: 100%; text-align: left; background: none; border: 0;
+  color: var(--drawer-ink); font-size: 14.5px; padding: 4px 6px; border-radius: 4px;
+}
+button.blink:hover { background: var(--bar-hover); color: var(--bar-ink); }
+.blink.soon { color: var(--drawer-soon); font-style: italic; cursor: default; }
+.blink.soon::after { content: ' ·'; }
+
+.searchwrap { position: relative; flex: 0 1 262px; min-width: 128px; }
+.searchwrap input {
+  width: 100%; height: 34px; border-radius: var(--radius);
+  border: 1px solid var(--bar-line); background: var(--bar-hover);
+  color: var(--bar-ink); padding: 0 11px; font-family: inherit; font-size: 14.5px; outline: none;
+}
+.searchwrap input::placeholder { color: var(--bar-muted-2); }
+.searchwrap input:focus { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+.searchwrap input:focus::placeholder { color: var(--muted-2); }
+
+/* theme toggle: sits in the chrome, so it uses the bar tokens, not the
+   page tokens. The icon is drawn in CSS rather than shipped as an asset. */
+.themetoggle {
+  flex: 0 0 auto; display: inline-flex; align-items: center; gap: 7px;
+  height: 34px; padding: 0 11px; border-radius: var(--radius);
+  border: 1px solid var(--bar-line); background: var(--bar-hover);
+  color: var(--bar-ink); font-size: 13.5px; transition: var(--dur-fast);
+}
+.themetoggle:hover { background: var(--bar-line); }
+.themeicon {
+  width: 13px; height: 13px; border-radius: 50%;
+  background: currentColor; position: relative; flex: 0 0 auto;
+}
+/* light = full disc; dark = crescent, bitten out by a shadow of the bar */
+:root[data-theme="dark"] .themeicon::after {
+  content: ''; position: absolute; top: -3px; right: -4px;
+  width: 12px; height: 12px; border-radius: 50%; background: var(--bar);
+}
+.themelabel { font-variant-numeric: tabular-nums; }
+@media (max-width: 900px) { .themelabel { display: none; } }
+@media (max-width: 720px) { .themetoggle { padding: 0 8px; } }
+
+.results {
+  position: absolute; top: 40px; left: 0; right: 0;
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow); max-height: 420px; overflow-y: auto; display: none; z-index: 60;
+}
+.results.on { display: block; }
+.ritem { padding: 8px 12px; cursor: pointer; border-bottom: 1px solid var(--paper-3); }
+.ritem:last-child { border-bottom: 0; }
+.ritem:hover { background: var(--paper-2); }
+.ritem .rl { font-size: 14.5px; }
+.ritem .rs { font-size: 12.5px; color: var(--muted); }
+.rkind {
+  display: inline-block; font-size: 10.5px; text-transform: uppercase; letter-spacing: .6px;
+  padding: 1px 5px; border-radius: 3px; margin-right: 6px; vertical-align: 1px;
+  background: var(--paper-3); color: var(--muted);
+}
+.rkind.company { background: var(--tint-blue-bg); color: var(--tint-blue-fg); }
+
+/* ---------- layout ---------- */
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) 428px;
+  gap: 16px;
+  padding: 16px;
+  align-items: start;
+  max-width: 1720px; margin: 0 auto;
+}
+.card {
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: var(--radius); box-shadow: var(--shadow);
+}
+
+/* ---------- stage ---------- */
+
+.stage { padding: 0; overflow: hidden; }
+.stagehead {
+  padding: 14px 18px 12px; border-bottom: 1px solid var(--line);
+  display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap;
+}
+.stagehead h1 { margin: 0; font-size: var(--fs-title); line-height: 1.15; font-weight: 700; letter-spacing: -.01em; }
+.stagehead .tag { color: var(--muted); font-size: 14.5px; margin-top: 3px; }
+.stagehead .unit { margin-left: auto; text-align: right; font-size: 12.5px; color: var(--muted); }
+.stagehead .unit b { display: block; color: var(--ink); font-size: 14px; font-weight: 600; }
+
+.crumbs { padding: 9px 18px; border-bottom: 1px solid var(--line); background: var(--paper-2);
+          font-size: 13.5px; color: var(--muted); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.crumbs button { background: none; border: 0; color: var(--ink-3); padding: 2px 4px; border-radius: 3px; font-size: 13.5px; }
+.crumbs button:hover { background: var(--paper-3); text-decoration: underline; }
+/* --line-2 is a border value; as type it measures 1.51:1 and the separator
+   between crumbs was effectively invisible */
+.crumbs .sep { color: var(--muted-2); }
+.crumbs .cur { color: var(--ink); font-weight: 600; }
+
+.toolbar {
+  padding: 10px 18px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  border-bottom: 1px solid var(--line);
+}
+.btn {
+  border: 1px solid var(--line-2); background: var(--paper); color: var(--ink);
+  border-radius: var(--radius); padding: 6px 13px; font-size: 14.5px; transition: .12s;
+}
+.btn:hover { background: var(--paper-2); border-color: var(--muted-2); }
+.btn.primary { background: var(--brand); color: var(--on-brand); border-color: var(--brand); }
+.btn.primary:hover { background: var(--brand-2); }
+.btn:disabled { opacity: .4; cursor: default; }
+.slider { display: flex; align-items: center; gap: 9px; font-size: 13.5px; color: var(--muted); }
+.slider input { width: 130px; accent-color: var(--ink); }
+.slider select {
+  border: 1px solid var(--line-2); background: var(--paper); color: var(--ink);
+  border-radius: var(--radius); padding: 5px 8px; font-size: 13.5px; font-family: inherit;
+}
+.viewtoggle.on { background: var(--signal); color: var(--on-brand); border-color: var(--signal); }
+.legend { margin-left: auto; display: flex; gap: 11px; flex-wrap: wrap; font-size: 12px; color: var(--muted); }
+.legend i { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 4px; vertical-align: 0; }
+
+.board { padding: 6px 10px 14px; }
+.board svg { width: 100%; height: auto; display: block; }
+
+/* svg part tiles
+   The label rules below are deliberately NOT scoped under .part / .frame.
+   schematic.js measures every string with a hidden probe <text> before it
+   lays anything out, and the probe has to resolve the same font, size and
+   letter-spacing as the visible label, which it can only do if the rule
+   matches on the class alone. Scoping these would silently make every
+   measurement wrong. Interaction states below stay scoped. */
+.frame rect { fill: var(--paper-2); stroke: var(--line); stroke-dasharray: 4 4; }
+.frame .frame-label-bg { fill: var(--paper); stroke: var(--line); stroke-dasharray: none; }
+.framelabel { fill: var(--muted-2); font-size: 12px; font-family: var(--font); letter-spacing: .8px; text-transform: uppercase; }
+
+.part { cursor: pointer; transition: transform .45s cubic-bezier(.22,.9,.3,1); outline: none; }
+.part .tile { fill: var(--tile); stroke: var(--line-2); stroke-width: 1.2; transition: .15s; }
+.part:hover .tile { stroke: var(--ink); stroke-width: 1.8; }
+.part:focus-visible .tile { stroke: var(--brand); stroke-width: 2.4; }
+.part.sel .tile { stroke: var(--brand); stroke-width: 2.4; fill: var(--tile-sel); }
+.pname { fill: var(--ink); font-size: 15px; font-weight: 600; font-family: var(--font); }
+.plead { fill: var(--muted); font-size: 13px; font-family: var(--font); }
+.pmeta { fill: var(--muted-2); font-size: 11.5px; font-family: var(--font); letter-spacing: .4px; }
+.part .choke { fill: var(--accent); }
+.part .choke-pulse { fill: none; stroke: var(--signal); stroke-width: 1.4; opacity: 0; transform-origin: center;
+                      animation: choke-ring 2.2s ease-out infinite; }
+@keyframes choke-ring {
+  0%   { opacity: .65; transform: scale(1); }
+  70%  { opacity: 0; transform: scale(2.1); }
+  100% { opacity: 0; transform: scale(2.1); }
+}
+.openmark { fill: var(--muted); font-size: 13px; font-family: var(--font); }
+.part:hover .openmark { fill: var(--ink); }
+.chainarrow { stroke: var(--line-2); stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+
+/* ---------- inspector ---------- */
+
+.inspector { padding: 0; position: sticky; top: 74px; max-height: calc(100vh - 90px); overflow-y: auto; }
+.inspector::-webkit-scrollbar { width: 9px; }
+.inspector::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 5px; }
+
+/* ---------- floating device inspector ----------
+   Scoped to .dev-inspector only: the standalone company page reuses the
+   plain .inspector/.layout classes as an always-visible column and must
+   stay untouched by any of this. */
+
+/* The panel is always occupied, with nothing selected it carries the
+   device's own analysis rather than a placeholder sentence, so there is no
+   empty state left to hide it for. */
+.dev-inspector { box-shadow: var(--shadow-3); border-radius: var(--radius-lg); }
+.dev-ins-chrome { display: flex; justify-content: flex-end; gap: 2px; padding: 8px 8px 0; }
+.ins-iconbtn {
+  background: none; border: 0; width: 28px; height: 28px; border-radius: var(--radius-sm);
+  color: var(--muted); font-size: 15px; line-height: 1; display: flex; align-items: center;
+  justify-content: center; transition: var(--dur-fast);
+}
+.ins-iconbtn:hover { background: var(--paper-2); color: var(--ink); }
+/* an explicit display: flex outranks the user-agent [hidden] rule, so the
+   close button stayed on screen in overview mode where it has nothing to
+   close: the attribute needs saying twice to win */
+.ins-iconbtn[hidden] { display: none; }
+#ins-close { font-size: 19px; }
+.dev-inspector.collapsed .ins-body > *:not(.ins-head) { display: none; }
+.dev-inspector.collapsed #ins-collapse { transform: rotate(-90deg); }
+
+/* On a phone only the component inspector becomes a bottom sheet. The
+   device overview stays in normal flow under the model: it is the page's
+   content at that point, not an overlay on top of something else, and
+   pinning it would permanently eat two thirds of the screen. */
+@media (max-width: 760px) {
+  .layout { grid-template-columns: minmax(0,1fr); }
+  .layout:not(.overview-mode) .dev-inspector {
+    position: fixed; left: 0; right: 0; bottom: 0; top: auto; z-index: 45;
+    width: auto; max-height: 62vh;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+  /* the sheet is fixed, so without room to scroll past it the toolbar under
+     the model becomes unreachable the moment a component is selected,
+     Isolate, X-ray and Reset were all stranded behind it on a phone */
+  .layout:not(.overview-mode) { padding-bottom: 64vh; }
+  .journey { padding: 10px 12px 12px; }
+  .src { grid-template-columns: 1fr; gap: 0 0; }
+  .src-k { padding-top: 5px; }
+}
+
+.ins-head { padding: 16px 18px 12px; border-bottom: 1px solid var(--line); }
+.ins-kicker { font-size: 11.5px; letter-spacing: 1.1px; text-transform: uppercase; color: var(--muted-2); }
+.ins-head h2 { margin: 3px 0 0; font-size: var(--fs-h2); line-height: 1.2; }
+.ins-blurb { margin: 8px 0 0; font-size: 14.5px; color: var(--muted); }
+
+.badge {
+  display: inline-block; font-size: 11.5px; letter-spacing: .5px; text-transform: uppercase;
+  padding: 2px 7px; border-radius: 3px; margin-top: 9px; margin-right: 6px; font-weight: 600;
+}
+.badge.choke {
+  background: var(--accent-2); color: var(--choke-fg); position: relative; padding-left: 16px;
+}
+.badge.choke::before {
+  content: ''; position: absolute; left: 6px; top: 50%; width: 6px; height: 6px;
+  margin-top: -3px; border-radius: 50%; background: var(--signal);
+  box-shadow: 0 0 0 0 var(--signal-glow);
+  animation: choke-pulse 2.2s ease-out infinite;
+}
+.badge.meta  { background: var(--tint-meta-bg); color: var(--ink-3); }
+
+/* the chokepoint pulse is the one place on the site allowed a persistent
+   animation, it marks the actual finding ("supply narrows to one point
+   here"), not decoration, so it earns the attention a loop demands */
+@keyframes choke-pulse {
+  0%   { box-shadow: 0 0 0 0 var(--signal-glow); }
+  70%  { box-shadow: 0 0 0 7px var(--signal-glow-0); }
+  100% { box-shadow: 0 0 0 0 var(--signal-glow-0); }
+}
+
+.stats { display: grid; grid-template-columns: repeat(2, 1fr); border-bottom: 1px solid var(--line); }
+.stat { padding: 11px 18px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.stat:nth-child(2n) { border-right: 0; }
+.stat .k { font-size: 11.5px; text-transform: uppercase; letter-spacing: .7px; color: var(--muted-2); }
+.stat .v { font-size: 18px; font-weight: 600; margin-top: 1px; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.stat .v small { font-size: 12.5px; font-weight: 400; color: var(--muted); }
+
+.sec { padding: 14px 18px; border-bottom: 1px solid var(--line); }
+.sec:last-child { border-bottom: 0; }
+.sec h3 {
+  margin: 0 0 10px; font-size: 11.5px; text-transform: uppercase; letter-spacing: 1.1px;
+  color: var(--muted-2); font-weight: 700;
+}
+
+/* concentration meter */
+.meter { height: 7px; border-radius: 4px; background: var(--paper-3); overflow: hidden; margin: 6px 0 7px; }
+.meter i { display: block; height: 100%; border-radius: 4px; }
+/* the meter fill (.meter i.conc-*) and the findings-table pill
+   (.pill.conc-*) share these five declarations: the only place the
+   concentration band colors are defined */
+.conc-fragmented   { background: var(--conc-fragmented); }
+.conc-competitive  { background: var(--conc-competitive); }
+.conc-moderate     { background: var(--conc-moderate); }
+.conc-high         { background: var(--conc-high); }
+.conc-monopoly     { background: var(--conc-monopoly); }
+.conclabel { font-size: 14.5px; font-weight: 600; }
+.conchint  { font-size: 13px; color: var(--muted); }
+
+/* share bars */
+.bar { display: block; width: 100%; text-align: left; background: none; border: 0; padding: 5px 0; border-radius: 3px; }
+.bar:hover { background: var(--paper-2); }
+.bar .brow { display: flex; align-items: baseline; gap: 8px; font-size: 14.5px; }
+.bar .bname { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar .bpct { font-variant-numeric: tabular-nums; font-weight: 600; flex: 0 0 auto; }
+.bar .btrack { height: 8px; background: var(--paper-3); border-radius: 3px; overflow: hidden; margin-top: 3px; }
+.bar .bfill { height: 100%; border-radius: 3px; }
+/* the Others row is a disabled button, which would otherwise inherit the
+   browser's own greyed-out text and land at 2.0:1 */
+.bar[disabled] { color: var(--ink); }
+.bar.others .bname { color: var(--muted); font-style: italic; }
+.bar.others .bpct { color: var(--muted); }
+.bar.others .bfill { background: var(--line-2); }
+.bflag { font-size: 11px; color: var(--muted-2); flex: 0 0 auto; }
+
+.note { font-size: 14.5px; color: var(--ink-2); }
+.note em { color: var(--muted); }
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  border: 1px solid var(--line-2); background: var(--paper); border-radius: 14px;
+  padding: 4px 11px; font-size: 13.5px; transition: .12s;
+}
+.chip:hover { background: var(--brand); color: var(--on-brand); border-color: var(--brand); }
+
+.deal { border-left: 2px solid var(--line-2); padding: 2px 0 2px 11px; margin-bottom: 11px; font-size: 14px; }
+.deal:last-child { margin-bottom: 0; }
+.deal .dh { font-weight: 600; }
+.deal .dy { color: var(--muted-2); font-variant-numeric: tabular-nums; }
+.deal .dv { color: var(--accent); font-weight: 600; }
+.deal .dn { color: var(--muted); margin-top: 1px; }
+
+.prov { font-size: 12.5px; color: var(--muted); }
+.prov b { color: var(--ink-2); font-weight: 600; }
+.conf { display: inline-block; padding: 1px 6px; border-radius: 3px; font-weight: 600; font-size: 11.5px;
+        text-transform: uppercase; letter-spacing: .5px; }
+.conf.high { background: var(--conf-high-bg); color: var(--conf-high-fg); }
+.conf.medium { background: var(--conf-medium-bg); color: var(--conf-medium-fg); }
+.conf.low { background: var(--conf-low-bg); color: var(--conf-low-fg); }
+
+/* source drawer */
+.srclist { list-style: none; margin: 0; padding: 0; }
+.srclist li { padding: 6px 0; border-bottom: 1px solid var(--paper-3); font-size: 13.5px; }
+.srclist li:last-child { border-bottom: 0; }
+.srctype {
+  display: inline-block; font-size: 10px; text-transform: uppercase; letter-spacing: .5px;
+  padding: 1px 6px; border-radius: 3px; margin-right: 7px; font-weight: 700; vertical-align: 1px;
+}
+.srctype.primary { background: var(--conf-high-bg); color: var(--conf-high-fg); }
+.srctype.third-party { background: var(--paper-3); color: var(--muted); }
+/* Derived is the weakest grade and is coloured like the weakest confidence
+   band, so it reads as a caveat rather than as another neutral category. */
+.srctype.derived { background: var(--conf-low-bg); color: var(--conf-low-fg); }
+.srcdate { color: var(--muted-2); font-size: 12px; }
+.srcnote { color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+
+.empty { padding: 40px 20px; text-align: center; color: var(--muted-2); font-size: 15px; }
+
+/* ---------- findings page ---------- */
+
+.page { padding: 20px 24px 28px; max-width: 1200px; margin: 0 auto; }
+.page h1 { margin: 0 0 4px; font-size: var(--fs-title); }
+.page .lede { color: var(--muted); font-size: 16px; margin: 0 0 22px; max-width: 720px; }
+.page h2 { font-size: 18px; margin: 26px 0 4px; }
+.page .sub { color: var(--muted); font-size: 14px; margin: 0 0 12px; max-width: 720px; }
+
+table.tbl { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+table.tbl th {
+  text-align: left; font-size: 11.5px; text-transform: uppercase; letter-spacing: .8px;
+  color: var(--muted-2); border-bottom: 1px solid var(--line-2); padding: 6px 9px; font-weight: 700;
+}
+table.tbl td { padding: 7px 9px; border-bottom: 1px solid var(--paper-3); vertical-align: top; }
+table.tbl tr:hover td { background: var(--paper-2); }
+table.tbl td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap;
+                   font-family: var(--font-mono); font-size: 13.5px; }
+table.tbl .lnk { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line-2); cursor: pointer; }
+table.tbl .lnk:hover { border-bottom-color: var(--ink); }
+/* the band supplies the ground, so the ink is chosen per band rather than
+   assumed white, white on the yellow "moderate" band measured 2.42:1 */
+.pill { display: inline-block; padding: 1px 7px; border-radius: 10px; font-size: 12px;
+        font-weight: 600; color: var(--on-band); }
+.pill.conc-monopoly { color: var(--on-band-inv); }
+/* The leader pill sits on --good, which is dark in light mode and bright in
+   dark mode, so it needs the inverted ink in both, the opposite of every
+   other pill. Default ink measured 3.31:1 on it. */
+.pill.lead { background: var(--good); color: var(--on-band-inv); }
+
+.cardgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px,1fr)); gap: 12px; }
+.dcard { padding: 15px 16px; cursor: pointer; transition: .14s; position: relative; }
+.dcard:hover { transform: translateY(-2px); box-shadow: var(--shadow-3); border-color: var(--line-2); }
+.dcard .dk { font-size: 11.5px; text-transform: uppercase; letter-spacing: .9px; color: var(--muted-2); }
+.dcard h3 { margin: 2px 0 5px; font-size: 19px; padding-right: 34px; }
+.dcard p { margin: 0; font-size: 14px; color: var(--muted); }
+.dcard .dstat { margin-top: 9px; font-size: 12.5px; color: var(--muted-2); }
+.dcard .tag3d {
+  position: absolute; top: 13px; right: 13px; font-size: 10.5px; font-weight: 700;
+  letter-spacing: .8px; background: var(--brand); color: var(--on-brand); padding: 2px 6px; border-radius: 3px;
+}
+.dcard.soon { cursor: default; background: transparent; border-style: dashed; box-shadow: none; }
+.dcard.soon:hover { transform: none; box-shadow: none; }
+.dcard.soon h3 { color: var(--muted-2); font-weight: 400; }
+/* --line-2 is a border value; as text it measured 1.51:1 */
+.dcard.soon p, .dcard.soon .dstat { color: var(--muted-2); }
+
+/* ---------- overview sections ---------- */
+
+.hero { padding: 6px 0 12px; }
+.hero h1 { font-size: var(--fs-display); line-height: 1.12; max-width: 780px; margin: 0 0 12px; letter-spacing: -.015em; }
+
+/* four-step explanation, replacing a marketing-style lede paragraph,
+   scannable in one pass rather than read as prose */
+.steps { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px;
+         list-style: none; margin: 0; padding: 0; max-width: 900px;
+         font-size: var(--fs-body); color: var(--muted); }
+.steps li { display: flex; align-items: baseline; gap: 10px; }
+.steps li:not(:last-child)::after { content: '\2192'; color: var(--line-2); margin-left: 2px; }
+.steps b { color: var(--ink); font-weight: 700; }
+
+.herostats { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 18px;
+             padding-top: 14px; border-top: 1px solid var(--line); font-size: var(--fs-small); color: var(--muted); }
+.herostats b { display: block; font-size: 22px; color: var(--ink); font-weight: 700; }
+
+.sect { margin-top: 34px; }
+.secthead { border-top: 2px solid var(--brand); padding-top: 10px; margin-bottom: 13px; }
+.secthead h2 { margin: 0; font-size: var(--fs-h2); }
+.secthead .sub { margin: 3px 0 0; }
+
+.sectlink { cursor: pointer; }
+.sectlink:hover { color: var(--ink); text-decoration: underline; }
+
+.tblwrap { overflow-x: auto; }
+
+/* ---------- 3D stage ---------- */
+
+.board3d {
+  position: relative; cursor: grab; user-select: none;
+  background:
+    radial-gradient(ellipse 62% 46% at 50% 62%, var(--board-glow) 0%, var(--board-glow-0) 72%),
+    var(--paper);
+  touch-action: none;
+  /* A <canvas> has no intrinsic aspect ratio, so the container needs its own
+     height or it collapses to whatever the orbit hint text needs. This was an
+     aspect-ratio against a max-height, but once the height clamped, the ratio
+     drove the *width* back down and left a white gutter beside the model
+     inside a wider card. An explicit height fills the card at every width and
+     gives the model more room; the camera fit already solves for whichever of
+     the two field-of-view angles is narrower, so a wide box is safe. */
+  width: 100%;
+  height: min(68vh, 720px);
+  min-height: 320px;
+}
+/* the canvas is sized by CSS, not by three.js writing px onto the element,
+   see the setSize(w, h, false) note in js/three-view.js */
+.board3d canvas { display: block; width: 100%; height: 100%; }
+.board3d.grabbing { cursor: grabbing; }
+.board3d svg.iso { width: 100%; height: auto; display: block; }
+
+.isoface { transition: opacity .16s; }
+.isoface.dim { opacity: .22; }
+.isoface.hov { filter: brightness(1.2); opacity: 1; }
+.iso-label { pointer-events: none; }
+
+.orbithint {
+  position: absolute; left: 16px; bottom: 12px; z-index: 2; pointer-events: none;
+  font-size: 12px; letter-spacing: .8px; text-transform: uppercase; color: var(--muted-2);
+}
+.hintline { font-size: 12.5px; color: var(--muted-2); }
+.layout:not(.no-selection) .schematic-hint { display: none; }
+
+.metabar { border-top: 1px solid var(--line); border-bottom: 0; }
+.metalabel { font-size: 12px; letter-spacing: .9px; text-transform: uppercase; color: var(--muted-2); }
+
+/* Set to the reading measure, not the stage measure: it is prose, and at
+   1720px its right edge disagreed visibly with everything below it. */
+.disclaimer {
+  margin: 18px auto 26px; padding: 12px 16px; border: 1px solid var(--line);
+  border-left: 3px solid var(--accent); background: var(--paper); border-radius: var(--radius);
+  font-size: 13.5px; color: var(--muted); max-width: 1200px;
+}
+.disclaimer b { color: var(--ink); }
+
+/* ---------- device overview ----------
+   The panel's other half: what a device says before you pick a component.
+   Deliberately not a grid of independent cards, sections share the
+   inspector's existing hairline rhythm, so metrics, charts and a component
+   read-out sit in one continuous column rather than a dashboard of tiles. */
+
+.ov-head { padding-bottom: 14px; }
+.ov-head .ins-blurb { font-size: 14px; line-height: 1.5; }
+
+/* metrics: four figures on shared rules, not four boxes */
+.ovmetrics {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  border-bottom: 1px solid var(--line);
+}
+.ovm {
+  padding: 12px 18px 13px;
+  border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
+}
+.ovm:nth-child(2n) { border-right: 0; }
+.ovm:nth-last-child(-n+2) { border-bottom: 0; }
+.ovm-k { font-size: 10.5px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted-2); font-weight: 600; }
+.ovm-v {
+  font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+  font-size: 21px; font-weight: 600; line-height: 1.15; margin-top: 3px;
+  letter-spacing: -.02em;
+}
+.ovm-v-long { font-size: 14px; letter-spacing: 0; }
+.ovm-s { font-size: 11.5px; color: var(--muted); margin-top: 3px; line-height: 1.35; }
+.ovm-none .ovm-v { font-family: var(--font); font-size: 14px; font-weight: 400;
+                   color: var(--muted-2); font-style: italic; }
+
+/* one analytical question per section */
+/* the topbar is sticky, so anything scrolled to programmatically: a chart
+   jumped to from a stage chip, a component scrolled into view on a phone,
+   lands underneath it without this */
+.ovc, .journey, .ins-head { scroll-margin-top: 70px; }
+
+.ovc { padding: 15px 18px 14px; border-bottom: 1px solid var(--line); }
+.ovc-q { margin: 0; font-size: 15px; font-weight: 700; letter-spacing: -.005em; color: var(--ink); }
+.ovc-lede { margin: 5px 0 12px; font-size: 13px; line-height: 1.5; color: var(--muted); }
+.ovc-lede b { color: var(--ink); font-weight: 600; }
+
+/* HHI is plotted on its own absolute scale, so the regulator threshold
+   stays at a fixed position instead of moving with the tallest bar */
+.ovc-scale {
+  display: flex; justify-content: space-between; position: relative;
+  font-size: 10px; color: var(--muted-2); font-family: var(--font-mono);
+  padding-bottom: 3px; border-bottom: 1px solid var(--line);
+  margin-bottom: 8px;
+}
+.ovc-thresh { position: absolute; left: 25%; transform: translateX(-50%); color: var(--ink-3); font-weight: 600; }
+.ovc-thresh::after {
+  content: ''; position: absolute; left: 50%; top: 100%; width: 1px; height: 6px;
+  background: var(--line-2);
+}
+
+.ovbars { display: flex; flex-direction: column; gap: 2px; }
+.ovbar {
+  display: block; width: 100%; text-align: left; background: none; border: 0;
+  padding: 5px 6px; margin: 0 -6px; border-radius: var(--radius-sm);
+  transition: background var(--dur-fast) var(--ease);
+}
+button.ovbar:hover { background: var(--paper-2); }
+button.ovbar:hover .ovbar-name { color: var(--brand); }
+.ovbar-top { display: flex; align-items: baseline; gap: 8px; }
+.ovbar-name {
+  flex: 1 1 auto; min-width: 0; font-size: 13.5px; color: var(--ink);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  transition: color var(--dur-fast) var(--ease);
+}
+.ovbar-val {
+  flex: 0 0 auto; font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+  font-size: 12.5px; font-weight: 600; color: var(--ink);
+}
+.ovbar-track { display: block; height: 7px; background: var(--paper-3); border-radius: 2px; margin-top: 4px; overflow: hidden; }
+.ovbar-fill { display: block; height: 100%; border-radius: 2px; }
+.ovbar-fill.cost { background: var(--brand); opacity: .82; }
+.ovbar-sub { display: block; font-size: 11.5px; color: var(--muted); margin-top: 3px; }
+
+/* chokepoint reuses the site's one live-signal colour, nothing new */
+.ovbar-choke {
+  display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--signal); margin-left: 6px; vertical-align: 1px;
+}
+
+/* The signature of this panel: what has not been measured is drawn, not
+   dropped. A hatched bar states the size of the gap so the bars above it
+   can never be misread as a complete accounting. */
+.ovbar.ghost { cursor: default; }
+.ovbar.ghost .ovbar-name, .ovbar.ghost .ovbar-val { color: var(--muted-2); }
+.ovbar.ghost .ovbar-name { font-style: italic; }
+.ovbar-fill.hatch {
+  background: repeating-linear-gradient(-45deg,
+    var(--line) 0 3px, transparent 3px 7px);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+}
+.ovc-gap {
+  margin: 10px 0 0; padding-left: 9px; border-left: 2px solid var(--line-2);
+  font-size: 11.5px; line-height: 1.45; color: var(--muted);
+}
+
+/* geography: one strip, then the read-out */
+.ovgeo { display: flex; height: 14px; border-radius: 3px; overflow: hidden; margin-bottom: 10px; }
+.ovgeo-seg { display: block; height: 100%; }
+.ovgeo-key { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--muted); }
+.ovgeo-item { display: inline-flex; align-items: baseline; gap: 5px; }
+.ovgeo-item i { width: 8px; height: 8px; border-radius: 2px; align-self: center; }
+.ovgeo-item b {
+  color: var(--ink); font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+  font-size: 11.5px; font-weight: 600;
+}
+
+/* source note: under every chart, no exceptions */
+.src {
+  margin-top: 11px; padding: 8px 10px; background: var(--paper-2);
+  border-radius: var(--radius-sm); border-left: 2px solid var(--line-2);
+  display: grid; grid-template-columns: auto 1fr; gap: 2px 10px;
+  font-size: 11px; line-height: 1.45; color: var(--muted);
+}
+.src-row { display: contents; }
+.src-k {
+  text-transform: uppercase; letter-spacing: .6px; font-size: 9.5px;
+  font-weight: 700; color: var(--muted-2); padding-top: 1px; white-space: nowrap;
+}
+.src-conf .conf { margin-right: 2px; }
+.src-conf { display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+            font-family: var(--font-mono); font-size: 10.5px; }
+
+.ov-cta {
+  padding: 13px 18px 15px; font-size: 12.5px; color: var(--muted);
+  background: var(--paper-2); border-top: 1px solid var(--line);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+/* ---------- journey strip ----------
+   Numbered because this genuinely is a sequence: silicon exists before a
+   board exists before a product does. Sits under the model, not in the
+   panel, because it is a fact about the object on screen. */
+
+.journey { border-top: 1px solid var(--line); padding: 12px 18px 14px; background: var(--paper-2); }
+.journey[hidden] { display: none; }
+.jrn-head {
+  font-size: 10.5px; text-transform: uppercase; letter-spacing: 1.1px;
+  color: var(--muted-2); font-weight: 700; margin-bottom: 9px;
+}
+.jrn {
+  list-style: none; margin: 0; padding: 0 0 2px;
+  display: flex; align-items: stretch; gap: 0;
+  overflow-x: auto; scrollbar-width: thin;
+}
+.jrn-stage { display: flex; align-items: center; flex: 0 0 auto; }
+.jrn-stage:not(:last-child)::after {
+  content: ''; width: 14px; height: 1px; background: var(--line-2); flex: 0 0 auto;
+}
+.jrn-btn {
+  display: flex; align-items: center; gap: 8px; white-space: nowrap;
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 7px 11px 7px 8px;
+  font-size: 13px; color: var(--ink);
+  transition: border-color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease),
+              box-shadow var(--dur-fast) var(--ease);
+}
+.jrn-btn:hover { border-color: var(--muted-2); box-shadow: var(--shadow-1); }
+.jrn-n, .jrn-count { font-family: var(--font-mono); font-size: 10.5px; color: var(--muted-2); }
+.jrn-n { font-weight: 700; font-variant-numeric: tabular-nums; }
+.jrn-count { background: var(--paper-3); border-radius: 8px; padding: 1px 6px; }
+.jrn-btn.on { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
+.jrn-btn.on .jrn-n { color: var(--brand-tint); }
+.jrn-btn.on .jrn-count { background: var(--ring-on); color: var(--on-brand); }
+
+.jrn-open { margin-top: 11px; padding-top: 11px; border-top: 1px solid var(--line); }
+.jrn-open[hidden] { display: none; }
+.jrn-note { margin: 0 0 9px; font-size: 13px; line-height: 1.5; color: var(--muted); max-width: 78ch; }
+
+/* ---------- source drawer ----------
+   Basis and confidence stay on the face of it; the source list itself is
+   one click away rather than permanently occupying the foot of the panel. */
+
+.srcdrawer { border-top: 1px solid var(--line); }
+.srcsum {
+  display: flex; align-items: center; gap: 10px; cursor: pointer;
+  padding: 12px 18px; list-style: none; font-size: 12.5px; color: var(--muted);
+  transition: background var(--dur-fast) var(--ease);
+}
+.srcsum::-webkit-details-marker { display: none; }
+.srcsum:hover { background: var(--paper-2); }
+.srcsum-lead { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1 1 auto; }
+.srcsum-basis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.srcsum-more { flex: 0 0 auto; color: var(--ink-3); font-weight: 600; }
+.srcsum-more::after { content: ' \203A'; display: inline-block; transition: transform var(--dur) var(--ease); }
+.srcdrawer[open] .srcsum-more::after { transform: rotate(90deg); }
+.srcdrawer[open] .srcsum { background: var(--paper-2); border-bottom: 1px solid var(--line); }
+.srcdrawer-body { padding: 12px 18px 14px; }
+.srcfoot { margin-top: 10px; padding-top: 9px; border-top: 1px solid var(--paper-3); }
+
+/* ---------- model backgrounds ----------
+   Per-model, because a pale airframe and a dark console need different
+   grounds to separate from. Still the site's own neutrals. */
+.board3d.bg-sky {
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 42%, var(--sky-glow) 0%, var(--sky-glow-0) 76%),
+    linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 100%);
+}
+.board3d.bg-plain { background: var(--paper); }
+
+/* ---------- part index ----------
+   The named list of what the model contains. A solid you can see but cannot
+   name is not really visible: this is the fallback for small internals and
+   for anything X-ray has faded, and the bridge between the 3D view and the
+   panel. Hovering a row lights the solid in the scene. */
+
+.partindex {
+  border-top: 1px solid var(--line); padding: 9px 18px 11px;
+  display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+}
+.partindex[hidden] { display: none; }
+.pi-label {
+  font-size: 10.5px; text-transform: uppercase; letter-spacing: 1px;
+  color: var(--muted-2); font-weight: 700; flex: 0 0 auto;
+}
+.pi-list { display: flex; flex-wrap: wrap; gap: 4px; min-width: 0; }
+.pi-item {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: none; border: 1px solid transparent; border-radius: 12px;
+  padding: 3px 9px 3px 6px; font-size: 12.5px; color: var(--ink-2);
+  transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+.pi-item i {
+  width: 9px; height: 9px; border-radius: 2px; flex: 0 0 auto;
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+.pi-item:hover { background: var(--paper-2); border-color: var(--line); }
+.pi-item.on { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
+.pi-item.on i { box-shadow: inset 0 0 0 1px var(--ring-on); }
+
+/* names whatever the pointer is over, so nothing on the canvas is anonymous */
+.td-readout {
+  position: absolute; left: 16px; top: 12px; z-index: 3; pointer-events: none;
+  background: var(--scrim-2); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 4px 10px;
+  font-size: 12.5px; font-weight: 600; color: var(--ink);
+  box-shadow: var(--shadow-1); max-width: calc(100% - 32px);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.td-readout[hidden] { display: none; }
+.td-readout.is-sel { border-color: var(--brand); color: var(--brand); }
+
+/* ---------- long-form story ----------
+   The full analysis below a device's teardown. Structure follows one rule:
+   one analytical question per section, the answer stated in words before it
+   is drawn, and the provenance attached to the chart rather than to a
+   footnote nobody reaches. */
+
+/* The reading measure, not the stage measure. The teardown above keeps the
+   full 1720px because the model wants the room; prose and charts are set to
+   the same 1200px the rest of the site's written pages use. */
+.story { max-width: 1200px; margin: 0 auto 40px; padding: 0 24px; }
+.story[hidden] { display: none; }
+
+/* Reads as a second row of the header rather than a card that happens to be
+   pinned. It used to be a rounded, translucent, inset pill: fine sitting in
+   the flow, wrong the moment it stuck, because a floating rounded box with
+   content sliding under it looks like debris rather than chrome. Square,
+   opaque, flush to the column edges, and hairlined off the content below. */
+.st-nav {
+  position: sticky; top: 58px; z-index: 40;
+  background: var(--paper);
+  border: 0; border-bottom: 1px solid var(--line); border-radius: 0;
+  margin: 0 -24px 22px;
+  box-shadow: 0 1px 0 rgba(13, 27, 42, .04), 0 6px 14px -10px rgba(13, 27, 42, .28);
+}
+.st-nav-inner {
+  display: flex; align-items: center; gap: 2px; padding: 7px 24px;
+  overflow-x: auto; scrollbar-width: none;
+}
+.st-nav-inner::-webkit-scrollbar { display: none; }
+.st-nav-label {
+  font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+  color: var(--muted-2); padding-right: 10px; margin-right: 4px;
+  border-right: 1px solid var(--line); white-space: nowrap; flex: 0 0 auto;
+}
+.st-nav-btn {
+  background: none; border: 0; border-radius: var(--radius-sm);
+  padding: 5px 11px; font-size: 13.5px; color: var(--muted); white-space: nowrap;
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+.st-nav-btn:hover { background: var(--paper-2); color: var(--ink); }
+.st-nav-btn.on { background: var(--brand-tint); color: var(--brand); font-weight: 600; }
+
+.st-sec { scroll-margin-top: 118px; margin-bottom: 40px; }
+.st-head { max-width: 760px; margin-bottom: 16px; }
+.st-kicker {
+  font-size: 11px; text-transform: uppercase; letter-spacing: 1.2px;
+  font-weight: 700; color: var(--accent-ink); margin-bottom: 6px;
+}
+.st-head h2 {
+  margin: 0; font-size: 27px; line-height: 1.18; letter-spacing: -.015em; font-weight: 700;
+}
+.st-lede { margin: 9px 0 0; font-size: 15.5px; line-height: 1.55; color: var(--muted); }
+.st-lede b { color: var(--ink); font-weight: 600; }
+
+/* two-up chart cards, dropping to one column when they stop fitting.
+   align-items:start so a short card sizes to its content instead of
+   stretching to match a tall neighbour and trailing white space */
+/* As a plain two-column grid every row was as tall as its tallest card, so a
+   short cost chart beside a long market ranking left a hole underneath it and
+   the next chart waited for the next row instead of rising into the space.
+
+   CSS columns do not fix this: they balance the two columns by height rather
+   than packing each card into the shortest one, which only moves the hole.
+   So the cards are measured and given a row span; see layoutMasonry() in
+   story.js. The fine-grained `grid-auto-rows` below is what a span is counted
+   in, and it is applied only once JS has actually measured, so without it the
+   grid still lays out correctly, just without the packing. */
+/* Cards keep their natural height. Stretching a pair to a common height was
+   tried and is worse: it does not remove the whitespace, it moves it inside
+   the shorter card, and a bordered panel with a 450px hollow in the middle
+   reads as broken where a slightly ragged bottom edge reads as a page. */
+.st-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 14px; align-items: start;
+}
+.st-grid.masonry { grid-auto-rows: 4px; row-gap: 0; }
+.st-grid.masonry > * { margin-bottom: 14px; }
+.src-more { color: var(--muted-2); font-style: normal; }
+
+/* the story's headline metrics run four across the page, not two across a
+   panel, and read as cards rather than as a bare table */
+.st-sec .ovmetrics {
+  grid-template-columns: repeat(4, 1fr); gap: 12px;
+  border: 0; margin-top: 18px;
+}
+.st-sec .ovm {
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--paper); padding: 14px 16px 15px;
+}
+.st-sec .ovm:nth-child(2n) { border-right: 1px solid var(--line); }
+.st-sec .ovm-v { font-size: 26px; }
+.st-sec .ovm-v-long { font-size: 15px; }
+.st-card {
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: var(--radius); box-shadow: var(--shadow-1);
+  padding: 15px 17px 16px; min-width: 0;
+}
+.st-card-head { margin-bottom: 13px; }
+.st-card-head h3 { margin: 0; font-size: 15.5px; font-weight: 700; letter-spacing: -.005em; }
+.st-card-head p { margin: 3px 0 0; font-size: 12.5px; color: var(--muted); }
+
+/* key findings: prose, deliberately not charts */
+.st-boxes {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px; margin-top: 16px;
+}
+.st-box {
+  background: var(--paper); border: 1px solid var(--line);
+  border-left: 3px solid var(--brand); border-radius: var(--radius);
+  padding: 14px 16px 13px;
+}
+.st-box h4 { margin: 0 0 6px; font-size: 15px; font-weight: 700; }
+.st-box p { margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--ink-2); }
+
+.st-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+.st-chip {
+  border: 1px solid var(--line-2); background: var(--paper); border-radius: 12px;
+  padding: 2px 9px; font-size: 12px; color: var(--ink-2);
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease),
+              border-color var(--dur-fast) var(--ease);
+}
+.st-chip:hover { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
+
+/* ---------- the build sequence ---------- */
+
+.st-stages {
+  list-style: none; margin: 0 0 20px; padding: 0;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px;
+  counter-reset: stage;
+}
+.st-stage {
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 13px 15px 14px;
+  display: flex; flex-direction: column;
+}
+.st-stage-top { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 6px; }
+.st-stage-n {
+  font-family: var(--font-mono); font-size: 12px; font-weight: 700;
+  color: var(--brand); font-variant-numeric: tabular-nums;
+}
+.st-stage-count { font-size: 11px; color: var(--muted-2); }
+.st-stage h4 { margin: 0 0 5px; font-size: 15px; font-weight: 700; }
+.st-stage > p { margin: 0 0 11px; font-size: 13px; line-height: 1.5; color: var(--muted); flex: 1 1 auto; }
+.st-stage-stat {
+  border-top: 1px solid var(--line); padding-top: 9px; margin-bottom: 9px;
+  display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;
+}
+.st-stage-stat b {
+  font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+  font-size: 13.5px; font-weight: 700;
+}
+.st-stage-stat span { font-size: 11.5px; color: var(--muted); }
+.st-stage-stat.none span { font-style: italic; color: var(--muted-2); }
+
+/* the concentration bands as text colour, so a stat can carry its band
+   without a second colour system appearing */
+.conc-fg-fragmented  { color: var(--conc-fg-fragmented); }
+.conc-fg-competitive { color: var(--conc-fg-competitive); }
+.conc-fg-moderate    { color: var(--conc-fg-moderate); }
+.conc-fg-high        { color: var(--conc-fg-high); }
+.conc-fg-monopoly    { color: var(--conc-fg-monopoly); }
+
+/* ---------- value-chain flow ---------- */
+
+.st-flow {
+  background: var(--paper-2); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 14px 16px 16px;
+}
+.st-flow-head {
+  font-size: 11px; text-transform: uppercase; letter-spacing: 1.1px;
+  font-weight: 700; color: var(--muted-2); margin-bottom: 12px;
+}
+.st-flow-body { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 16px; align-items: center; }
+.st-lanes { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.st-lane {
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: var(--radius-sm); padding: 9px 11px;
+}
+.st-lane-label {
+  font-size: 10.5px; text-transform: uppercase; letter-spacing: .9px;
+  font-weight: 700; color: var(--muted-2); margin-bottom: 7px;
+}
+.st-lane-row { display: flex; align-items: stretch; gap: 5px; flex-wrap: wrap; }
+.st-flow-step {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 1px;
+  background: var(--paper-2); border: 1px solid var(--line);
+  border-radius: var(--radius-sm); padding: 5px 9px; text-align: left;
+  transition: border-color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+}
+.st-flow-step:hover { background: var(--paper); border-color: var(--brand); }
+.st-flow-step.choke { border-left: 3px solid var(--signal); }
+.st-flow-name { font-size: 12.5px; font-weight: 600; color: var(--ink); white-space: nowrap; }
+.st-flow-lead {
+  font-size: 11px; font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+/* the arrow carries direction, so it is content, not a rule, it needs type
+   contrast rather than border contrast */
+.st-flow-arrow { align-self: center; color: var(--muted-2); font-size: 13px; }
+.st-feed { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line); }
+.st-feed-label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: .8px;
+  color: var(--muted-2); margin-bottom: 6px;
+}
+.st-converge {
+  border-left: 2px solid var(--line-2); padding-left: 14px;
+}
+.st-converge-label {
+  font-size: 10.5px; text-transform: uppercase; letter-spacing: .9px;
+  font-weight: 700; color: var(--muted-2); margin-bottom: 7px;
+}
+
+/* market-size bars: hollow means the figure is the whole world market for
+   that component, not the notebook slice of it */
+.ovbar-fill.market { background: var(--ink-3); }
+.ovbar-fill.market.whole {
+  background: repeating-linear-gradient(-45deg, var(--line-2) 0 3px, transparent 3px 7px);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+}
+.st-whole {
+  display: inline-block; width: 7px; height: 7px; margin-left: 6px;
+  border: 1px solid var(--line-2); border-radius: 2px; vertical-align: 1px;
+}
+
+/* ---------- country x stage heat strip ----------
+   One row per build stage, each normalised to itself. Rows are the same
+   height and the same width so the eye compares composition down the
+   column, which is the whole point of putting them under one another. */
+
+.st-heat { list-style: none; margin: 0 0 12px; padding: 0; }
+.st-heat-row {
+  display: grid; grid-template-columns: 26px minmax(0, 200px) minmax(0, 1fr) minmax(0, 146px);
+  align-items: center; gap: 10px; padding: 4px 0;
+}
+.st-heat-n {
+  font-family: var(--font-mono); font-size: 10.5px; color: var(--muted-2);
+  font-variant-numeric: tabular-nums;
+}
+.st-heat-name {
+  font-size: 12.5px; color: var(--ink); overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap;
+}
+.st-heat-bar {
+  display: flex; height: 15px; border-radius: 3px; overflow: hidden;
+  background: var(--paper-3);
+}
+.st-heat-seg { height: 100%; }
+.st-heat-top {
+  font-size: 11.5px; font-variant-numeric: tabular-nums; text-align: right;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.st-heat-row.empty .st-heat-name,
+.st-heat-row.empty .st-heat-top { color: var(--muted-2); font-style: italic; }
+
+/* ---------- cost against concentration ---------- */
+
+.st-scatter { margin: 4px 0 10px; }
+.st-scatter svg { width: 100%; height: auto; display: block; overflow: visible; }
+.sc-grid { stroke: var(--line); stroke-width: 1; }
+.sc-grid.thresh { stroke: var(--muted-2); stroke-dasharray: 4 3; }
+.sc-ax {
+  fill: var(--muted-2); font-size: 10.5px; font-family: var(--font-mono);
+}
+.sc-axtitle {
+  fill: var(--muted); font-size: 11px; font-family: var(--font);
+  letter-spacing: .4px;
+}
+.sc-note { fill: var(--muted-2); font-size: 10px; font-family: var(--font); }
+.sc-lab { fill: var(--ink); font-size: 11.5px; font-family: var(--font); }
+.sc-leader { stroke: var(--line-2); stroke-width: .8; }
+/* .conc-* elsewhere on the site sets background; an SVG shape needs fill,
+   so the bands are restated here rather than reusing those rules */
+.sc-dot { stroke: var(--paper); stroke-width: 1.2; opacity: .92; }
+.sc-dot.conc-fragmented  { fill: var(--conc-fragmented); }
+.sc-dot.conc-competitive { fill: var(--conc-competitive); }
+.sc-dot.conc-moderate    { fill: var(--conc-moderate); }
+.sc-dot.conc-high        { fill: var(--conc-high); }
+.sc-dot.conc-monopoly    { fill: var(--conc-monopoly); }
+/* a component with no stated market size gets no area, so it cannot be read
+   as a small market when it is really an unmeasured one */
+.sc-dot.nosize { fill: none; stroke: var(--muted-2); stroke-width: 1.4; }
+
+/* ---------- chokepoints ---------- */
+
+.st-chokes {
+  list-style: none; margin: 0 0 14px; padding: 0;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 10px;
+}
+.st-choke {
+  border: 1px solid var(--line); border-left: 3px solid currentColor;
+  border-radius: var(--radius-sm); padding: 11px 13px 12px; background: var(--paper-2);
+}
+.st-choke-head { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+.st-choke-name {
+  font-size: 14.5px; font-weight: 600; color: var(--ink); text-align: left;
+  background: none; border: 0; padding: 0; cursor: pointer;
+}
+.st-choke-name:hover { text-decoration: underline; }
+.st-choke-head .pill { margin-left: auto; flex: 0 0 auto; }
+.st-choke-hhi {
+  font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  margin-bottom: 7px;
+}
+.st-choke-hhi b { font-family: var(--font-mono); font-size: 14px; color: var(--ink); }
+.st-choke-hhi.none { font-style: italic; }
+.st-holders { display: flex; flex-wrap: wrap; gap: 5px 10px; margin-bottom: 8px; }
+.st-holder { font-size: 12px; color: var(--muted); }
+.st-holder b { color: var(--ink); font-weight: 600; margin-right: 5px; }
+.st-choke-reach { border-top: 1px dashed var(--line); padding-top: 8px; }
+.st-choke-reach p { margin: 0 0 6px; font-size: 12px; color: var(--muted); line-height: 1.5; }
+.st-choke-reach p:last-child { margin-bottom: 0; }
+.st-choke-reach .st-chip { margin: 1px 3px 1px 0; }
+.st-chip-cost {
+  font-style: normal; font-size: 10px; color: var(--muted-2); margin-left: 5px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- deal timeline ----------
+   No value axis. The values in this data are free text and several were
+   never disclosed, so sequence is the only dimension that can be drawn
+   without inventing the rest. */
+
+.st-timeline { list-style: none; margin: 0 0 14px; padding: 0; }
+.st-year { display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 14px; }
+.st-year-n {
+  font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--muted-2);
+  font-variant-numeric: tabular-nums; padding-top: 12px; position: sticky; top: 108px;
+  align-self: start;
+}
+.st-deal-list {
+  list-style: none; margin: 0; padding: 0 0 0 16px;
+  border-left: 2px solid var(--line);
+}
+.st-deal { position: relative; padding: 10px 0 12px; }
+.st-deal::before {
+  content: ''; position: absolute; left: -22px; top: 17px;
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--paper); border: 2px solid var(--line-2);
+}
+.st-deal.choke::before { border-color: var(--signal); background: var(--signal); }
+.st-deal-head { display: flex; align-items: baseline; gap: 7px; flex-wrap: wrap; }
+.st-deal-party { font-size: 14px; font-weight: 600; color: var(--ink); }
+.st-deal-party.target { font-weight: 400; color: var(--muted); }
+.st-deal-arrow { color: var(--muted-2); font-size: 12px; }
+.st-deal-meta {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 5px 0 0;
+}
+.st-deal-band {
+  font-size: 10.5px; text-transform: uppercase; letter-spacing: .7px; font-weight: 600;
+}
+.st-deal-v {
+  font-family: var(--font-mono); font-size: 11.5px; color: var(--muted-2);
+  font-variant-numeric: tabular-nums;
+}
+.st-deal-note { margin: 6px 0 0; font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+
+/* ---------- method ---------- */
+
+.st-srclist { list-style: none; margin: 0; padding: 0; }
+.st-srclist li {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 0; border-bottom: 1px solid var(--paper-3); font-size: 13px;
+}
+.st-srclist li:last-child { border-bottom: 0; }
+.st-srccount {
+  margin-left: auto; font-family: var(--font-mono); font-size: 11.5px;
+  color: var(--muted-2); font-variant-numeric: tabular-nums;
+}
+.st-conf { display: flex; flex-direction: column; gap: 9px; }
+.st-conf > div { display: flex; align-items: baseline; gap: 9px; }
+.st-conf b {
+  font-family: var(--font-mono); font-size: 17px; font-variant-numeric: tabular-nums;
+  min-width: 28px;
+}
+.st-conf > div > span:last-child { font-size: 12.5px; color: var(--muted); }
+
+/* the panel's hand-off to the analysis below */
+.ov-handoff { padding: 15px 18px 16px; border-bottom: 1px solid var(--line); }
+.ov-handoff p { margin: 0 0 11px; font-size: 13.5px; line-height: 1.5; color: var(--muted); }
+
+@media (max-width: 1180px) {
+  .layout { grid-template-columns: minmax(0,1fr); }
+  .inspector { position: static; max-height: none; }
+  .searchwrap { flex: 0 1 190px; }
+  .st-flow-body { grid-template-columns: minmax(0,1fr); }
+  .st-converge { border-left: 0; border-top: 2px solid var(--line-2); padding: 12px 0 0; }
+}
+@media (max-width: 760px) {
+  .story { padding: 0 12px; }
+  .st-head h2 { font-size: 22px; }
+  .st-lede { font-size: 14.5px; }
+  .st-grid { grid-template-columns: minmax(0,1fr); }
+  .st-nav { top: 58px; margin-left: -12px; margin-right: -12px; }
+  .st-nav-inner { padding-left: 12px; padding-right: 12px; }
+  .st-sec .ovmetrics { grid-template-columns: 1fr 1fr; }
+  .st-sec .ovm-v { font-size: 21px; }
+}
+/* tablet tier: still single-column (from the rule above) but with tighter
+   padding and a smaller display heading, so content isn't laid out
+   identically from a 1179px tablet down to a 400px phone */
+@media (max-width: 1024px) {
+  .layout { padding: 12px; gap: 12px; }
+  .hero h1 { font-size: 28px; }
+  .cardgrid { grid-template-columns: repeat(auto-fill, minmax(210px,1fr)); }
+}
+@media (max-width: 900px) {
+  .brand span { display: none; }
+}
+@media (max-width: 720px) {
+  .searchwrap { flex: 0 1 130px; }
+  .stagehead .unit { display: none; }
+  .stats { grid-template-columns: 1fr 1fr; }
+}
+
+/* ================= guided tour =================
+   Opt-in walkthrough of the laptop teardown; see js/tour.js.
+
+   The spotlight is four solid panels arranged around the target rather than a
+   mask or a spread shadow, which has one property worth keeping: the lit
+   region has no overlay over it at all, so the element being described stays
+   fully interactive. The tour can therefore say "try it now" about the 3D
+   model and mean it.
+
+   Every colour here is an existing token, so the overlay follows the theme
+   and inherits contrast ratios that were already measured. */
+
+.tourtrigger {
+  flex: 0 0 auto; display: inline-flex; align-items: center; gap: 6px;
+  height: 34px; padding: 0 11px; border-radius: var(--radius);
+  border: 1px solid var(--bar-line); background: var(--bar-hover);
+  color: var(--bar-ink); font-size: 13.5px; transition: var(--dur-fast);
+}
+.tourtrigger:hover { background: var(--bar-line); }
+.tourtrigger::before {
+  content: ''; width: 0; height: 0; flex: 0 0 auto;
+  border-left: 7px solid currentColor;
+  border-top: 4.5px solid transparent; border-bottom: 4.5px solid transparent;
+}
+@media (max-width: 1040px) { .tourtriggerlabel { display: none; } }
+/* Withdrawn rather than shrunk below this. Two reasons, and the second is the
+   real one: at 390px the topbar has no room left and the page starts
+   scrolling sideways, which interact.py rightly fails on, but also the tour
+   spotlights a side inspector and a wide 3D board, and neither of those
+   layouts exists at phone width. Offering a walkthrough of an interface that
+   is not on screen is worse than not offering one. */
+@media (max-width: 899px) { .tourtrigger { display: none; } }
+
+/* The root spans the viewport purely to host fixed children, so it must not
+   eat pointer events itself. Without this the lit region is unreachable and
+   the tour's own promise ("try it now, the tour will wait") is a lie: the
+   spotlight looks like a hole in the page but behaves like glass. Only the
+   scrim panels and the card take input back. */
+.tour { position: fixed; inset: 0; z-index: 200; pointer-events: none; }
+.tour[hidden] { display: none; }
+
+/* Purely visual. The scrim dims, it does not gate: a reader who wants to
+   click something the tour is not currently pointing at should be able to,
+   and the tour should still be there when they look back. Only the card
+   itself takes pointer input. */
+.tour-scrim {
+  position: fixed; pointer-events: none;
+  background: rgba(9, 17, 28, .58);
+  backdrop-filter: saturate(.7) blur(.5px);
+  transition: opacity var(--dur) var(--ease);
+}
+:root[data-theme="dark"] .tour-scrim { background: rgba(2, 6, 12, .74); }
+
+/* The lit region keeps no overlay, so the ring must not intercept clicks.
+   Deliberately NOT transitioned on position. The four scrim panels have to
+   tile exactly against each other every frame, and animating their edges
+   opens visible seams mid-flight; a ring that glided while the mask cut
+   instantly just drew attention to the mismatch. Both move at once, and a
+   short pulse gives the eye the cue the movement used to. */
+.tour-ring {
+  position: fixed; pointer-events: none; border-radius: var(--radius);
+  box-shadow: 0 0 0 2px var(--signal), 0 0 0 6px var(--signal-glow);
+}
+.tour-ring[hidden] { display: none; }
+.tour-ring.pulse { animation: tour-pulse .42s var(--ease); }
+@keyframes tour-pulse {
+  from { box-shadow: 0 0 0 2px var(--signal), 0 0 0 14px var(--signal-glow-0); }
+  to   { box-shadow: 0 0 0 2px var(--signal), 0 0 0 6px var(--signal-glow); }
+}
+
+.tour-card {
+  position: fixed; pointer-events: auto;
+  width: min(430px, calc(100vw - 32px));
+  background: var(--paper); color: var(--ink);
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-3); padding: 0 18px 15px;
+  transition: top .26s var(--ease), left .26s var(--ease),
+              opacity .16s linear, transform .16s var(--ease);
+}
+/* A step change used to read as three events: the caption text changed
+   instantly, then the page navigated, then the card slid to a new anchor.
+   Now the card and ring fade out first, the page moves while they are
+   invisible, and both come back already in the right place with the right
+   text. One movement instead of three. */
+.tour.swapping .tour-card { opacity: 0; transform: translateY(5px); }
+.tour.swapping .tour-ring { opacity: 0; }
+.tour-ring { transition: opacity .16s linear; }
+
+/* Minimised: the card collapses to a bar so the page underneath is usable.
+   The tour keeps its place and its progress. */
+.tour.min .tour-scrim, .tour.min .tour-ring { display: none; }
+.tour.min .tour-card {
+  top: auto !important; bottom: 18px;
+  left: 50% !important; transform: translateX(-50%);
+  width: auto; max-width: calc(100vw - 32px); padding: 0 8px 0 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.tour.min .tour-track, .tour.min .tour-text, .tour.min .tour-head { display: none; }
+.tour.min .tour-card h3 {
+  margin: 0; font-size: var(--fs-body); font-weight: 600; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis; max-width: 46vw; padding: 11px 0;
+  order: 1;
+}
+.tour.min .tour-foot { margin: 0; padding: 7px 0; order: 2; }
+/* The close icon is absolutely positioned in the corner of the full card,
+   which is right there and wrong here: minimised, the card is a flex row whose
+   right edge is the Next button, so an absolute icon pinned to that corner
+   lands on top of it. In the bar it joins the row and takes its turn at the
+   end. tourcheck asserts no two controls overlap in either state. */
+.tour.min .tour-x {
+  position: static; order: 3; flex: 0 0 auto;
+  width: 30px; height: 30px; margin-left: 2px;
+}
+.tour-card:focus { outline: none; }
+.tour-card:focus-visible { box-shadow: var(--shadow-3), var(--focus-ring); }
+
+.tour-track {
+  position: relative;
+  height: 3px; margin: 0 -18px 13px; border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background: var(--paper-3); overflow: hidden;
+}
+.tour-fill {
+  display: block; height: 100%; background: var(--signal);
+  transition: width var(--dur) var(--ease);
+}
+/* The autoplay countdown rides over the step progress on the same strip, in
+   the accent rather than the signal colour so the two readings stay legible
+   at once: how far through the tour, and how long this step has left. Width
+   is driven from JS because the duration has to match the real timer. */
+.tour-autofill {
+  position: absolute; inset: 0 auto 0 0; display: block;
+  width: 0; background: var(--accent); opacity: .9;
+}
+
+/* Ends the tour. Replaced a text button in the footer, which spent a whole
+   control slot saying what a cross says. */
+.tour-x {
+  position: absolute; top: 8px; right: 8px;
+  width: 26px; height: 26px; padding: 0; border: 0; border-radius: var(--radius-sm);
+  background: none; color: var(--muted); font-size: 19px; line-height: 1;
+  transition: var(--dur-fast);
+}
+.tour-x:hover { background: var(--paper-2); color: var(--ink); }
+/* the close icon sits over the top-right corner, so everything on that
+   row has to clear it or the step counter runs underneath it */
+.tour-card h3, .tour-head { padding-right: 30px; }
+
+.tour-head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+  font-size: var(--fs-caption); letter-spacing: .06em; text-transform: uppercase;
+  color: var(--muted-2); margin-bottom: 5px;
+}
+.tour-count { font-family: var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: 0; text-transform: none; }
+.tour-card h3 { margin: 0 0 6px; font-size: var(--fs-h2); line-height: 1.25; }
+.tour-text { margin: 0 0 14px; font-size: var(--fs-body); line-height: 1.5; color: var(--ink-3); }
+
+.tour-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.tour-nav { display: flex; align-items: center; gap: 7px; }
+
+.tour-btn {
+  height: 31px; padding: 0 12px; border-radius: var(--radius);
+  border: 1px solid var(--line-2); background: var(--paper);
+  color: var(--ink-2); font-size: var(--fs-small); transition: var(--dur-fast);
+}
+.tour-btn:hover:not(:disabled) { background: var(--paper-2); border-color: var(--muted-2); }
+.tour-btn:disabled { opacity: .42; cursor: default; }
+.tour-btn.primary {
+  background: var(--brand); border-color: var(--brand); color: var(--on-brand); font-weight: 600;
+}
+.tour-btn.primary:hover { background: var(--brand-2); border-color: var(--brand-2); }
+.tour-btn.tour-end { border-color: transparent; background: transparent; color: var(--muted); }
+.tour-btn.tour-end:hover { background: var(--paper-2); color: var(--ink-2); }
+.tour-btn.tour-auto.on { background: var(--signal-2); border-color: var(--signal); color: var(--ink); }
+:root[data-theme="dark"] .tour-btn.tour-auto.on { background: var(--brand); border-color: var(--signal); color: var(--on-brand); }
+
+@media (prefers-reduced-motion: reduce) {
+  .tour-card, .tour-fill { transition: none; }
+  .tour-ring.pulse { animation: none; }
+}
+@media (max-width: 620px) {
+  .tour-card { padding: 0 14px 13px; }
+  .tour-foot { flex-wrap: wrap; }
+}
+
+/* ================= source links and the sources page =================
+   Every citation on the site renders through TD.sourceLink, so a publisher
+   looks and behaves the same under a chart, inside the inspector drawer, in a
+   story's method section and on the registry page.
+
+   The `nolink` variant matters as much as the link. Four publishers name no
+   single retrievable document and together carry about 40% of all citations,
+   so they get a dotted underline and their reason on hover. A reader can tell
+   at a glance which citations they can follow and which they cannot, which is
+   the point of having the distinction at all. */
+
+.srclink { color: var(--brand); text-decoration: none; border-bottom: 1px solid transparent; }
+.srclink:hover { border-bottom-color: currentColor; }
+.srclink.nolink {
+  color: var(--muted); cursor: help;
+  border-bottom: 1px dotted var(--line-2);
+}
+:root[data-theme="dark"] .srclink { color: var(--tint-blue-fg); }
+
+a.src-more { color: var(--muted); font-style: italic; text-decoration: none; }
+a.src-more:hover { color: var(--brand); text-decoration: underline; }
+
+.srcpg-stats {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px; margin: 18px 0 22px;
+}
+.srcpg-stats > div {
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 12px 14px;
+}
+.srcpg-stats b {
+  display: block; font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+  font-size: 24px; line-height: 1.1; color: var(--ink);
+}
+.srcpg-stats span {
+  display: block; margin-top: 3px; font-size: var(--fs-caption);
+  text-transform: uppercase; letter-spacing: .06em; color: var(--muted-2);
+}
+
+.srcpg-list { list-style: none; margin: 0 0 26px; padding: 0; display: grid; gap: 9px; }
+.srcpg-item {
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 11px 14px;
+}
+.srcpg-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.srcpg-name { font-size: var(--fs-h3); font-weight: 600; }
+.srcpg-count {
+  flex: 0 0 auto; font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+  font-size: var(--fs-caption); color: var(--muted-2); white-space: nowrap;
+}
+.srcpg-note { margin: 6px 0 0; font-size: var(--fs-small); line-height: 1.5; color: var(--ink-3); }
+.srcpg-devs { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.srcpg-devs span {
+  font-size: var(--fs-caption); color: var(--muted-2);
+  background: var(--paper-2); border: 1px solid var(--line);
+  border-radius: 999px; padding: 2px 8px;
+}
+.page h2 .srctype { vertical-align: middle; margin-right: 6px; }
+
+@media (max-width: 760px) {
+  .srcpg-stats { grid-template-columns: 1fr 1fr; }
+}
+
+
+/* ---- the length chooser ----
+   Shown on Run tour instead of launching straight into thirty-one steps. */
+.tour-choose { position: fixed; inset: 0; z-index: 210; }
+.tour-choose[hidden] { display: none; }
+.tour-choose-scrim { position: absolute; inset: 0; background: rgba(9, 17, 28, .55); }
+:root[data-theme="dark"] .tour-choose-scrim { background: rgba(2, 6, 12, .68); }
+.tour-choose-card {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: min(460px, calc(100vw - 32px));
+  background: var(--paper); color: var(--ink);
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-3); padding: 20px 20px 18px;
+}
+.tour-choose-card:focus { outline: none; }
+.tour-choose-card h3 { margin: 0 26px 6px 0; font-size: var(--fs-h2); }
+.tour-choose-card > p {
+  margin: 0 0 15px; font-size: var(--fs-body); line-height: 1.5; color: var(--ink-3);
+}
+.tour-choose-opts { display: grid; gap: 9px; }
+.tour-opt {
+  display: block; width: 100%; text-align: left;
+  background: var(--paper); border: 1px solid var(--line-2);
+  border-radius: var(--radius); padding: 12px 14px; transition: var(--dur-fast);
+}
+.tour-opt:hover { border-color: var(--brand); background: var(--brand-tint); }
+.tour-opt b { display: block; font-size: var(--fs-h3); color: var(--ink); margin-bottom: 2px; }
+.tour-opt span { display: block; font-size: var(--fs-small); line-height: 1.45; color: var(--muted); }
+.tour-opt:hover span { color: var(--ink-3); }
